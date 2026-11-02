@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Caselet of the Week: Spawn - The Pricing Play</title>
+<style>
+  :root{
+    --ink:#1e293b;
+    --navy:#073763;
+    --paper:#f2f1f6;
+    --panel:#ffffff;
+    --line:#cbd5e1;
+    --lightblue:#cfe2f3;
+    --accent:#5846c8;
+    --slate:#64748b;
+    --good:#16663f;
+    --good-bg:#d1f5df;
+    --bad:#a3281b;
+    --bad-bg:#fde2e1;
+  }
+
+  /* --- Force Georgia on every element --- */
+  *, *::before, *::after {
+    box-sizing: border-box;
+    font-family: Georgia, 'Times New Roman', serif !important;
+  }
+
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.55;
+  }
+  .wrap{max-width:640px;margin:0 auto;background:var(--panel);}
+
+  .header{padding:20px 24px 0;}
+  .badge-row{margin-bottom:8px;}
+  .badge{
+    display:inline-block;
+    background:var(--lightblue);
+    color:var(--navy);
+    font-size:12px;
+    letter-spacing:.02em;
+    padding:4px 10px;
+    border-radius:3px;
+  }
+  h1{
+    font-size:24px;
+    line-height:1.25;
+    color:var(--navy);
+    margin:6px 0 8px;
+  }
+  .byline{
+    font-size:12.5px;
+    color:var(--slate);
+    margin-bottom:18px;
+    padding-bottom:18px;
+    border-bottom:1px solid var(--line);
+  }
+
+  .lede{padding:0 24px;}
+  .lede p{font-size:14px;margin:0 0 12px;}
+  .framework{
+    font-size:16px;
+    font-weight:bold;
+    color:var(--navy);
+    margin:16px 0 12px;
+  }
+  .prompts{margin:0 0 26px;padding-left:18px;}
+  .prompts li{font-size:13px;margin-bottom:6px;}
+  .prompts strong{color:var(--navy);}
+
+  /* --- progress --- */
+  .progress-shell{padding:0 24px;margin-bottom:6px;}
+  .progress-track{
+    height:4px;
+    background:var(--lightblue);
+    border-radius:2px;
+    overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;
+    width:0%;
+    background:var(--navy);
+    transition:width .35s ease;
+  }
+  .progress-label{
+    font-size:11px;
+    color:var(--slate);
+    margin:6px 0 20px;
+  }
+
+  /* --- quiz card --- */
+  .quizwrap{padding:0 24px;}
+  .card{
+    border-top:1px solid var(--line);
+    padding:20px 0;
+  }
+  .qcount{
+    font-size:12.5px;
+    color:var(--slate);
+    margin-bottom:4px;
+  }
+  .qtext{
+    font-weight:bold;
+    font-size:15px;
+    margin:0 0 12px;
+    color:var(--ink);
+  }
+
+  .css-quiz-group{margin:0 0 8px;font-size:13px;}
+  .css-quiz-opt{
+    display:flex;
+    align-items:stretch;
+    width:100%;
+    text-align:left;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:10px 12px;
+    margin-bottom:6px;
+    font-size:13px;
+    color:var(--ink);
+    cursor:pointer;
+    transition:border-color .15s ease, background-color .15s ease;
+  }
+  .css-quiz-opt:hover:not(:disabled){border-color:var(--navy);}
+  .css-quiz-opt:disabled{cursor:default;}
+  .css-quiz-opt.correct{background:var(--good-bg);color:var(--good);font-weight:bold;border-color:var(--good);}
+  .css-quiz-opt.wrong{background:var(--bad-bg);color:var(--bad);font-weight:bold;border-color:var(--bad);}
+  .css-quiz-opt.dim{opacity:.55;}
+
+  .feedback{display:none;font-size:13px;color:#334155;}
+  .feedback.show{display:block;}
+  .feedback .why{margin:10px 0 10px;}
+  .feedback .why strong{color:var(--ink);}
+  .learnt{
+    background:#f8fafc;
+    border-left:3px solid var(--accent);
+    padding:8px 10px;
+  }
+  .learnt strong{display:block;color:var(--ink);margin-bottom:2px;}
+
+  .navrow{text-align:right;margin-top:14px;}
+  .nextbtn,.prevbtn{
+    font-size:13px;
+    border:none;
+    padding:9px 18px;
+    border-radius:4px;
+    cursor:pointer;
+    transition:background-color .15s ease;
+  }
+  .nextbtn{background:var(--navy);color:#fff;}
+  .nextbtn:hover:not(:disabled){background:#0d4a7d;}
+  .nextbtn:disabled{opacity:.4;cursor:default;}
+  .prevbtn{background:#fff;color:var(--navy);border:1px solid var(--line);margin-right:8px;}
+  .prevbtn:hover:not(:disabled){border-color:var(--navy);}
+  .prevbtn:disabled{opacity:.4;cursor:default;}
+
+  /* --- results --- */
+  .results{display:none;padding:0 24px 8px;}
+  .results.show{display:block;}
+  .score-hero{
+    text-align:center;
+    padding:22px 16px;
+    background:var(--lightblue);
+    border-radius:6px;
+    margin:20px 0 24px;
+  }
+  .score-eyebrow{
+    font-size:11.5px;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    color:var(--navy);
+    margin-bottom:6px;
+  }
+  .score-num{
+    font-size:34px;
+    font-weight:bold;
+    color:var(--navy);
+  }
+  .rank-title{
+    display:inline-block;
+    margin-top:8px;
+    font-size:13px;
+    font-weight:bold;
+    letter-spacing:.02em;
+    color:var(--accent);
+    background:#fff;
+    border:1px solid var(--accent);
+    border-radius:3px;
+    padding:4px 12px;
+  }
+  .score-sub{
+    font-size:13px;
+    color:#1e3a5f;
+    margin-top:10px;
+  }
+
+  .recap-title{
+    text-align:center;
+    font-size:18px;
+    color:var(--navy);
+    margin:0 0 14px;
+  }
+  table.recap{
+    width:100%;
+    border-collapse:collapse;
+    font-size:12px;
+    margin-bottom:8px;
+  }
+  table.recap th,table.recap td{
+    border:1px solid var(--line);
+    padding:6px 8px;
+    text-align:left;
+    vertical-align:top;
+  }
+  table.recap th{
+    font-weight:bold;
+    background:#f8fafc;
+    width:32%;
+    color:var(--navy);
+  }
+
+  .signoff{
+    padding:20px 24px;
+    font-size:13px;
+    color:#1e293b;
+  }
+  .signoff strong{display:block;margin-bottom:2px;}
+
+  @media (max-width:480px){
+    h1{font-size:20px;}
+    .score-num{font-size:28px;}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none !important;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <div class="badge-row"><span class="badge">Caselet of the Week</span></div>
+    <h1>Spawn &mdash; The Pricing Play</h1>
+  </div>
+
+  <div class="lede" id="lede">
+    <p>This caselet works through a gaming startup's launch pricing decision using a simple four-step framework: understand the market, compare the financial economics, evaluate player behaviour, and make the recommendation.</p>
+    <p>When two options tie on profit, the numbers are not the end of the analysis. Focus on what each model unlocks, and what would have to go right for it to work.</p>
+
+    <div class="framework">Understand the Market &rarr; Compare the Economics &rarr; Evaluate Player Behaviour &rarr; Recommend</div>
+
+    <ul class="prompts">
+      <li><strong>How big is the audience?</strong> Narrow a broad population step by step into a realistic addressable market for a PC multiplayer game.</li>
+      <li><strong>Which model earns the most?</strong> Compare subscription, retail and free-to-play on revenue, costs, profit and margin, keeping the sunk development cost out.</li>
+      <li><strong>Which model fits Spawn best?</strong> Weigh survey evidence, strategic options and risks, and recommend a model with clear metrics to monitor.</li>
+    </ul>
+  </div>
+
+  <div class="progress-shell">
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-label" id="progressLabel">Question 1 of 8</div>
+  </div>
+
+  <div class="quizwrap" id="quiz"></div>
+
+  <div class="results" id="results">
+    <div class="score-hero">
+      <div class="score-eyebrow">Case complete</div>
+      <div class="score-num"><span id="scoreVal">0</span>/8</div>
+      <div class="rank-title" id="rankTitle"></div>
+      <div class="score-sub" id="scoreMsg"></div>
+    </div>
+
+    <h2 class="recap-title">Did you get it right?</h2>
+    <table class="recap">
+      <tr><th>Concept</th><th>What you learnt</th></tr>
+      <tr><td>Market Sizing</td><td>Estimating the addressable audience through a sequence of explicit assumptions helps establish the scale of the opportunity. The result should be treated as an estimate, not a precise count.</td></tr>
+      <tr><td>Unit Economics</td><td>Examines the revenue and costs associated with a customer, buyer or install. It helps identify whether acquiring additional users creates or destroys value.</td></tr>
+      <tr><td>Customer Acquisition Cost (CAC)</td><td>The cost of acquiring a customer or user. The relevant customer must be clearly defined, particularly when some users install a product but never pay.</td></tr>
+      <tr><td>Sensitivity Analysis</td><td>Tests how outcomes change when assumptions such as conversion, average spending or acquisition costs change. It helps identify the assumptions that matter most to profitability.</td></tr>
+      <tr><td>Strategic Optionality and Network Effects</td><td>Optionality refers to the future opportunities enabled by a current decision. A larger player base may support community growth, partnerships and new revenue streams, while network effects make a product more valuable as participation grows.</td></tr>
+    </table>
+  </div>
+
+</div>
+
+<script>
+const QUESTIONS = [
+  {
+    "q": "What should be the primary objective of Spawn's pricing decision?",
+    "opts": [
+      "Maximise the upfront price charged to every player, regardless of demand.",
+      "Maximise first-year profitability while building a player base and a business model that can support long-term growth.",
+      "Select whichever model is easiest to implement, even if it limits future expansion.",
+      "Focus exclusively on capturing market share, regardless of the cost of acquiring players."
+    ],
+    "correct": 1,
+    "why": "Spawn must demonstrate a sustainable revenue trajectory within twelve months, while preparing for future growth. First-year profitability matters, but the pricing model will also influence player acquisition, retention, monetisation, and the ability to expand into new platforms and geographies. The ₹80 crore already spent on development is sunk and should not determine which pricing model is best going forward.",
+    "learnt": "A strong consulting objective combines the immediate business outcome with the constraints and strategic goals that shape the decision. It also distinguishes future decision-making from costs that have already been incurred."
+  },
+  {
+    "q": "Based on the market-sizing assumptions, what is the approximate addressable PC gaming audience for Mahayoddha in India?",
+    "opts": [
+      "15 crore",
+      "2.7 crore",
+      "95 lakh, rounded to approximately 1 crore",
+      "50 crore"
+    ],
+    "correct": 2,
+    "why": "The market is narrowed in stages: urban population of 50 crore × 30% aged 21–40 = 15 crore; × 18% with PC and broadband = 2.7 crore; × 35% playing PC games monthly = 0.945 crore, or 94.5 lakh. This rounds to approximately 1 crore. Starting with the entire gaming population would overstate the market because most Indian gamers play on mobile rather than PC.",
+    "learnt": "Market sizing is about progressively narrowing a broad population using relevant filters. Each assumption should be explicit, logically applied, and open to sensitivity testing."
+  },
+  {
+    "q": "Under the subscription model, what is Spawn's estimated first-year profit using the stated assumptions?",
+    "opts": [
+      "₹10 crore",
+      "₹18 crore",
+      "₹40 crore",
+      "₹70 crore"
+    ],
+    "correct": 2,
+    "why": "Revenue = 10 lakh subscribers × ₹2,400 = ₹240 crore. Variable cost plus CAC = ₹1,000 + ₹700 = ₹1,700 per subscriber, so 10 lakh × ₹1,700 = ₹170 crore. Adding ₹30 crore of fixed costs gives total costs of ₹200 crore. Profit = ₹240 crore − ₹200 crore = ₹40 crore, a margin of about 16.7%.",
+    "learnt": "A profitability calculation should clearly separate revenue, variable costs, customer acquisition costs, and fixed costs. This structure also makes it easier to test how changes in price, conversion, or acquisition costs affect the outcome."
+  },
+  {
+    "q": "Which pricing model generates the lowest estimated first-year profit under the base-case assumptions?",
+    "opts": [
+      "Subscription",
+      "Retail",
+      "Free-to-Play",
+      "All three models generate the same profit."
+    ],
+    "correct": 1,
+    "why": "For retail, 12 lakh buyers × ₹1,200 = ₹144 crore in revenue. Buyer-level cost is ₹440 + ₹360 = ₹800, so 12 lakh × ₹800 = ₹96 crore; adding ₹30 crore of fixed costs gives ₹126 crore. Profit = ₹144 crore − ₹126 crore = ₹18 crore (12.5% margin), compared with ₹40 crore for both subscription and Free-to-Play. Retail performs worst on revenue, absolute profit and margin.",
+    "learnt": "Compare business models using multiple financial metrics. Revenue alone does not determine attractiveness; the cost structure and resulting profit matter just as much."
+  },
+  {
+    "q": "Under the Free-to-Play model, what are the estimated first-year profit and profit margin?",
+    "opts": [
+      "₹18 crore profit and 12.5% margin",
+      "₹30 crore profit and 10% margin",
+      "₹40 crore profit and approximately 13.3% margin",
+      "₹70 crore profit and 23.3% margin"
+    ],
+    "correct": 2,
+    "why": "Installs = 1 crore × 50% = 50 lakh. Paying users = 50 lakh × 30% = 15 lakh, generating 15 lakh × ₹2,000 = ₹300 crore. Install-level costs = ₹260 + ₹140 = ₹400 × 50 lakh = ₹200 crore. Add ₹200 per paying user (15 lakh × ₹200 = ₹30 crore) and ₹30 crore of fixed costs: total costs ₹260 crore. Profit = ₹40 crore, a margin of about 13.3%. Subscription and Free-to-Play therefore match on absolute profit, though subscription has the higher margin.",
+    "learnt": "When costs apply to different populations, keep the calculations separate. Free-to-Play has costs for every install, including non-paying users, as well as an additional cost for paying users. Ignoring either layer would distort the economics."
+  },
+  {
+    "q": "Which interpretation of the beta survey is most defensible?",
+    "opts": [
+      "Subscription is the clear winner because it scores highest on retention intent.",
+      "Free-to-Play is guaranteed to have the highest actual retention and revenue after launch.",
+      "Retail should be selected because one-time payments eliminate the need for ongoing monetisation.",
+      "Subscription has a loyalty-related advantage, while Free-to-Play has stronger stated add-on purchase and recommendation intent; the survey should inform, but not replace, the broader decision."
+    ],
+    "correct": 3,
+    "why": "Subscription scores 4.5 on continuation intent versus 4.2 for Free-to-Play, and 1.8 on likelihood to switch versus 2.3. However, Free-to-Play scores higher on add-on purchase intent (4.8 versus 4.1) and recommendation intent (4.2 versus 4.0). The survey has only 100 respondents and measures stated intentions, which may differ from actual post-launch behaviour, so it supports a nuanced reading rather than an absolute conclusion.",
+    "learnt": "Qualitative research adds context to financial analysis, but its limitations matter. Distinguish stated preferences from actual behaviour and use multiple evidence sources before making a strategic decision."
+  },
+  {
+    "q": "Why might Free-to-Play be strategically more attractive than subscription, even though both models generate ₹40 crore in estimated first-year profit?",
+    "opts": [
+      "Free-to-Play has the highest profit margin of all three models.",
+      "Free-to-Play eliminates all customer acquisition and server costs.",
+      "Free-to-Play creates a larger install base that could support community growth, alternative revenue streams, and future platform and geographic expansion.",
+      "Free-to-Play guarantees that all installed users will eventually make purchases."
+    ],
+    "correct": 2,
+    "why": "Free-to-Play attracts 50 lakh installs compared with 10 lakh subscription customers. This larger base could support creator partnerships, tournaments, sponsorships, merchandise, and expansion into mobile, console and Southeast Asia, and it matches Indian gamers' familiarity with free access and optional in-game spending. However, a larger install base is not automatically a larger active community or a more profitable business: Spawn must still retain players, convert enough of them, and manage costs.",
+    "learnt": "Strategic value extends beyond first-year profit. A business model can create future options, capabilities, and network effects, but those benefits must be supported by execution rather than assumed to materialise automatically."
+  },
+  {
+    "q": "Which recommendation best balances Spawn's first-year economics with its longer-term strategic objectives?",
+    "opts": [
+      "Launch on subscription because the higher profit margin makes all other considerations irrelevant.",
+      "Launch on retail because upfront payment removes the need to build an ongoing player community.",
+      "Launch on Free-to-Play, while closely monitoring paying conversion, average revenue per paying user, acquisition costs, and infrastructure costs.",
+      "Delay the launch until the company can develop mobile and console versions simultaneously."
+    ],
+    "correct": 2,
+    "why": "Free-to-Play matches subscription on estimated first-year absolute profit while offering a larger potential install base and more flexibility for future expansion, and it fits the consumer behaviour and competitive context in the case. The recommendation is conditional on execution: Spawn must monitor paying conversion, spend per paying user, acquisition and serving costs, and how active the larger community becomes. The higher subscription margin is a legitimate counterargument, but Spawn's objectives include growth and long-term scale, not just first-year margin.",
+    "learnt": "A strong recommendation brings together quantitative analysis, customer behaviour, competitive dynamics, and future strategic options. It should also acknowledge the strongest counterargument and identify the assumptions that must hold for the recommendation to succeed."
+  }
+];
+
+const LETTERS = ["A","B","C","D"];
+let current = 0;
+const answers = new Array(QUESTIONS.length).fill(null);
+
+const quizEl = document.getElementById('quiz');
+const fill = document.getElementById('progressFill');
+const label = document.getElementById('progressLabel');
+
+function getScore(){
+  return answers.reduce((sum, sel, idx) => sum + (sel === QUESTIONS[idx].correct ? 1 : 0), 0);
+}
+
+function updateProgress(){
+  const pct = current < QUESTIONS.length ? (current / QUESTIONS.length) * 100 : 100;
+  fill.style.width = pct + '%';
+  label.textContent = current < QUESTIONS.length
+    ? `Question ${current+1} of ${QUESTIONS.length}`
+    : `Complete: ${QUESTIONS.length} of ${QUESTIONS.length}`;
+}
+
+function renderQuestion(){
+  updateProgress();
+  document.getElementById('results').classList.remove('show');
+  document.getElementById('lede').style.display = current === 0 ? '' : 'none';
+  const item = QUESTIONS[current];
+  const answered = answers[current];
+
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.innerHTML = `
+    <div class="qcount">Question ${current+1} of ${QUESTIONS.length}</div>
+    <div class="qtext">${item.q}</div>
+    <div class="css-quiz-group"></div>
+    <div class="feedback">
+      <div class="why"><strong>Explanation:</strong> ${item.why}</div>
+      <div class="learnt"><strong>Takeaway:</strong> ${item.learnt}</div>
+    </div>
+    <div class="navrow">
+      <button class="prevbtn" type="button" ${current === 0 ? "disabled" : ""}>Previous</button>
+      <button class="nextbtn" type="button" ${answered === null ? "disabled" : ""}>${current === QUESTIONS.length-1 ? "See results" : "Next question"}</button>
+    </div>
+  `;
+
+  const group = card.querySelector('.css-quiz-group');
+  item.opts.forEach((text, i)=>{
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'css-quiz-opt';
+    btn.textContent = `${LETTERS[i]}. ${text}`;
+    if(answered === null){
+      btn.addEventListener('click', ()=> selectOption(i, card));
+    } else {
+      btn.disabled = true;
+      if(i === item.correct) btn.classList.add('correct');
+      else if(i === answered) btn.classList.add('wrong');
+      else btn.classList.add('dim');
+    }
+    group.appendChild(btn);
+  });
+
+  if(answered !== null){
+    card.querySelector('.feedback').classList.add('show');
+  }
+
+  card.querySelector('.prevbtn').addEventListener('click', ()=>{
+    if(current > 0){
+      current--;
+      renderQuestion();
+    }
+  });
+  card.querySelector('.nextbtn').addEventListener('click', ()=>{
+    current++;
+    if(current < QUESTIONS.length){
+      renderQuestion();
+    } else {
+      showResults();
+    }
+  });
+
+  quizEl.innerHTML = '';
+  quizEl.appendChild(card);
+}
+
+function selectOption(i, card){
+  const item = QUESTIONS[current];
+  answers[current] = i;
+  const opts = card.querySelectorAll('.css-quiz-opt');
+  opts.forEach((btn, idx)=>{
+    btn.disabled = true;
+    if(idx === item.correct) btn.classList.add('correct');
+    else if(idx === i) btn.classList.add('wrong');
+    else btn.classList.add('dim');
+  });
+
+  card.querySelector('.feedback').classList.add('show');
+  card.querySelector('.nextbtn').disabled = false;
+}
+
+function getRankTitle(score){
+  if(score === 8) return "CasedIt!";
+  if(score >= 6) return "Sharp Analyst";
+  if(score >= 4) return "Budding Consultant";
+  return "Case Rookie";
+}
+
+function showResults(){
+  updateProgress();
+  quizEl.innerHTML = '';
+  document.getElementById('results').classList.add('show');
+  const score = getScore();
+  document.getElementById('scoreVal').textContent = score;
+  document.getElementById('rankTitle').textContent = getRankTitle(score);
+  const msgEl = document.getElementById('scoreMsg');
+  let msg;
+  if(score === 8) msg = "Full marks. You navigated Spawn from market sizing to a final pricing recommendation without missing a step.";
+  else if(score >= 6) msg = "Strong case sense. Revisit the misses above to sharpen the diagnosis further.";
+  else if(score >= 4) msg = "A solid start. Review the recap below to reinforce the framework before the next caselet.";
+  else msg = "Worth a second pass. Walk back through the reasoning in each explanation above.";
+  msgEl.textContent = msg;
+}
+
+renderQuestion();
+</script>
+</body>
+</html>
