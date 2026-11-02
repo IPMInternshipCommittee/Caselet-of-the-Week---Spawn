@@ -291,10 +291,10 @@ const QUESTIONS = [
   {
     "q": "What should be the primary objective of Spawn's pricing decision?",
     "opts": [
-      "Maximise the upfront price charged to every player, regardless of demand.",
-      "Maximise first-year profitability while building a player base and a business model that can support long-term growth.",
-      "Select whichever model is easiest to implement, even if it limits future expansion.",
-      "Focus exclusively on capturing market share, regardless of the cost of acquiring players."
+      "Maximise first-year profit alone, since the next funding round hinges on near-term results",
+      "Maximise first-year profit while building a player base that supports long-term growth",
+      "Build the largest player base first and defer monetisation decisions until after launch",
+      "Recover the ₹80 crore already spent on development within the first year after launch"
     ],
     "correct": 1,
     "why": "Spawn must demonstrate a sustainable revenue trajectory within twelve months, while preparing for future growth. First-year profitability matters, but the pricing model will also influence player acquisition, retention, monetisation, and the ability to expand into new platforms and geographies. The ₹80 crore already spent on development is sunk and should not determine which pricing model is best going forward.",
@@ -303,24 +303,24 @@ const QUESTIONS = [
   {
     "q": "Based on the market-sizing assumptions, what is the approximate addressable PC gaming audience for Mahayoddha in India?",
     "opts": [
-      "15 crore",
-      "2.7 crore",
-      "95 lakh, rounded to approximately 1 crore",
-      "50 crore"
+      "About 1 crore",
+      "About 2.7 crore",
+      "About 15 crore",
+      "About 50 crore"
     ],
-    "correct": 2,
+    "correct": 0,
     "why": "The market is narrowed in stages: urban population of 50 crore × 30% aged 21–40 = 15 crore; × 18% with PC and broadband = 2.7 crore; × 35% playing PC games monthly = 0.945 crore, or 94.5 lakh. This rounds to approximately 1 crore. Starting with the entire gaming population would overstate the market because most Indian gamers play on mobile rather than PC.",
     "learnt": "Market sizing is about progressively narrowing a broad population using relevant filters. Each assumption should be explicit, logically applied, and open to sensitivity testing."
   },
   {
     "q": "Under the subscription model, what is Spawn's estimated first-year profit using the stated assumptions?",
     "opts": [
-      "₹10 crore",
-      "₹18 crore",
-      "₹40 crore",
-      "₹70 crore"
+      "₹70 crore",
+      "₹110 crore",
+      "₹140 crore",
+      "₹40 crore"
     ],
-    "correct": 2,
+    "correct": 3,
     "why": "Revenue = 10 lakh subscribers × ₹2,400 = ₹240 crore. Variable cost plus CAC = ₹1,000 + ₹700 = ₹1,700 per subscriber, so 10 lakh × ₹1,700 = ₹170 crore. Adding ₹30 crore of fixed costs gives total costs of ₹200 crore. Profit = ₹240 crore − ₹200 crore = ₹40 crore, a margin of about 16.7%.",
     "learnt": "A profitability calculation should clearly separate revenue, variable costs, customer acquisition costs, and fixed costs. This structure also makes it easier to test how changes in price, conversion, or acquisition costs affect the outcome."
   },
@@ -330,7 +330,7 @@ const QUESTIONS = [
       "Subscription",
       "Retail",
       "Free-to-Play",
-      "All three models generate the same profit."
+      "Subscription and Retail"
     ],
     "correct": 1,
     "why": "For retail, 12 lakh buyers × ₹1,200 = ₹144 crore in revenue. Buyer-level cost is ₹440 + ₹360 = ₹800, so 12 lakh × ₹800 = ₹96 crore; adding ₹30 crore of fixed costs gives ₹126 crore. Profit = ₹144 crore − ₹126 crore = ₹18 crore (12.5% margin), compared with ₹40 crore for both subscription and Free-to-Play. Retail performs worst on revenue, absolute profit and margin.",
@@ -339,10 +339,10 @@ const QUESTIONS = [
   {
     "q": "Under the Free-to-Play model, what are the estimated first-year profit and profit margin?",
     "opts": [
-      "₹18 crore profit and 12.5% margin",
-      "₹30 crore profit and 10% margin",
-      "₹40 crore profit and approximately 13.3% margin",
-      "₹70 crore profit and 23.3% margin"
+      "₹70 crore profit at about 23.3% margin",
+      "₹40 crore profit at about 16.7% margin",
+      "₹40 crore profit at about 13.3% margin",
+      "₹100 crore profit at about 33.3% margin"
     ],
     "correct": 2,
     "why": "Installs = 1 crore × 50% = 50 lakh. Paying users = 50 lakh × 30% = 15 lakh, generating 15 lakh × ₹2,000 = ₹300 crore. Install-level costs = ₹260 + ₹140 = ₹400 × 50 lakh = ₹200 crore. Add ₹200 per paying user (15 lakh × ₹200 = ₹30 crore) and ₹30 crore of fixed costs: total costs ₹260 crore. Profit = ₹40 crore, a margin of about 13.3%. Subscription and Free-to-Play therefore match on absolute profit, though subscription has the higher margin.",
@@ -351,34 +351,34 @@ const QUESTIONS = [
   {
     "q": "Which interpretation of the beta survey is most defensible?",
     "opts": [
-      "Subscription is the clear winner because it scores highest on retention intent.",
-      "Free-to-Play is guaranteed to have the highest actual retention and revenue after launch.",
-      "Retail should be selected because one-time payments eliminate the need for ongoing monetisation.",
-      "Subscription has a loyalty-related advantage, while Free-to-Play has stronger stated add-on purchase and recommendation intent; the survey should inform, but not replace, the broader decision."
+      "Subscription shows stronger loyalty intent, Free-to-Play stronger add-on intent; treat it as directional input",
+      "Subscription leads on retention and low switching intent, so the survey settles the choice in its favour",
+      "Free-to-Play leads on add-on and referral intent, so its post-launch revenue is effectively assured",
+      "Retail's weak scores are acceptable because upfront payment makes later engagement less important"
     ],
-    "correct": 3,
+    "correct": 0,
     "why": "Subscription scores 4.5 on continuation intent versus 4.2 for Free-to-Play, and 1.8 on likelihood to switch versus 2.3. However, Free-to-Play scores higher on add-on purchase intent (4.8 versus 4.1) and recommendation intent (4.2 versus 4.0). The survey has only 100 respondents and measures stated intentions, which may differ from actual post-launch behaviour, so it supports a nuanced reading rather than an absolute conclusion.",
     "learnt": "Qualitative research adds context to financial analysis, but its limitations matter. Distinguish stated preferences from actual behaviour and use multiple evidence sources before making a strategic decision."
   },
   {
     "q": "Why might Free-to-Play be strategically more attractive than subscription, even though both models generate ₹40 crore in estimated first-year profit?",
     "opts": [
-      "Free-to-Play has the highest profit margin of all three models.",
-      "Free-to-Play eliminates all customer acquisition and server costs.",
-      "Free-to-Play creates a larger install base that could support community growth, alternative revenue streams, and future platform and geographic expansion.",
-      "Free-to-Play guarantees that all installed users will eventually make purchases."
+      "Its profit margin exceeds subscription's, making it the stronger model on unit economics",
+      "Its 30% paying conversion is a firmer assumption than subscription's 10% acquisition rate",
+      "It avoids acquisition and server costs on non-paying users, so costs scale more slowly",
+      "Its larger install base opens options such as creators, sponsorships and regional expansion"
     ],
-    "correct": 2,
+    "correct": 3,
     "why": "Free-to-Play attracts 50 lakh installs compared with 10 lakh subscription customers. This larger base could support creator partnerships, tournaments, sponsorships, merchandise, and expansion into mobile, console and Southeast Asia, and it matches Indian gamers' familiarity with free access and optional in-game spending. However, a larger install base is not automatically a larger active community or a more profitable business: Spawn must still retain players, convert enough of them, and manage costs.",
     "learnt": "Strategic value extends beyond first-year profit. A business model can create future options, capabilities, and network effects, but those benefits must be supported by execution rather than assumed to materialise automatically."
   },
   {
     "q": "Which recommendation best balances Spawn's first-year economics with its longer-term strategic objectives?",
     "opts": [
-      "Launch on subscription because the higher profit margin makes all other considerations irrelevant.",
-      "Launch on retail because upfront payment removes the need to build an ongoing player community.",
-      "Launch on Free-to-Play, while closely monitoring paying conversion, average revenue per paying user, acquisition costs, and infrastructure costs.",
-      "Delay the launch until the company can develop mobile and console versions simultaneously."
+      "Launch on subscription, since its higher margin and stated loyalty give the most dependable first-year result",
+      "Launch on retail, since upfront payment brings the earliest cash and the lightest ongoing server load",
+      "Launch on Free-to-Play and track paying conversion, spend per paying user, acquisition cost and infrastructure cost",
+      "Hold the launch until mobile and console versions are ready, so the install base spans platforms"
     ],
     "correct": 2,
     "why": "Free-to-Play matches subscription on estimated first-year absolute profit while offering a larger potential install base and more flexibility for future expansion, and it fits the consumer behaviour and competitive context in the case. The recommendation is conditional on execution: Spawn must monitor paying conversion, spend per paying user, acquisition and serving costs, and how active the larger community becomes. The higher subscription margin is a legitimate counterargument, but Spawn's objectives include growth and long-term scale, not just first-year margin.",
